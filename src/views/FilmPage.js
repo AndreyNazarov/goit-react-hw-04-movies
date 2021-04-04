@@ -3,6 +3,7 @@ import * as HomePageApi from '../services/ApiGenerator';
 import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Cast from './Cast';
+import Review from './Review';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function FilmPage() {
@@ -21,7 +22,6 @@ export default function FilmPage() {
     fetchFilm();
   }, [films, id]);
 
-  // console.log(casts);
   return (
     <>
       {films && (
@@ -40,22 +40,20 @@ export default function FilmPage() {
           <hr />
           <h2>Additional information</h2>
 
-          {/* {casts &&
-            casts.map(cast => (
-              <ul>
-                <li key={cast.id}>
-                  <NavLink to={`${url}/${cast.id}`}>{cast.name}</NavLink>
-                </li>
-              </ul>
-            ))} */}
           <ul>
             <li>
               <NavLink to={`${url}/cast`}>Cast</NavLink>
             </li>
+            <li>
+              <NavLink to={`${url}/reviews`}>Reviews</NavLink>
+            </li>
           </ul>
           <hr />
-          <Route path={`${path}/:castId`}>
-            <Cast id={id} />
+          <Route path={`${path}/cast`}>
+            <Cast />
+          </Route>
+          <Route path={`${path}/reviews`}>
+            <Review />
           </Route>
         </>
       )}

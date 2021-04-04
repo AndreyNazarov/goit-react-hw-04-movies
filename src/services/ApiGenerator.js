@@ -21,3 +21,8 @@ export function fetchCast(movieId) {
     `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=333ea31ca01b4ec8ead6d98f3e2d2283&language=en-US`,
   );
 }
+export function fetchReviews(movieId) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=333ea31ca01b4ec8ead6d98f3e2d2283&language=en-US`,
+  );
+}
