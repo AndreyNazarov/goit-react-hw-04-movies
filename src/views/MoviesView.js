@@ -16,13 +16,11 @@ const MoviesView = ({ onSubmit }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmitForm}>
-        <h1>Movies</h1>
-        <input type="text" value={query} onChange={onChange} />
-        <button type="submit">Search</button>
-      </form>
-    </>
+    <form onSubmit={onSubmitForm}>
+      <h1>Movies</h1>
+      <input type="text" value={query} onChange={onChange} />
+      <button type="submit">Search</button>
+    </form>
   );
 };
 export default MoviesView;
