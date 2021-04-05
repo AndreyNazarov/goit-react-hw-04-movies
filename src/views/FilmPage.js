@@ -25,7 +25,7 @@ export default function FilmPage() {
 
   return (
     <>
-      <button type="button" onClick={history.push('/')}>
+      <button type="button" onClick={() => history.push('/')}>
         Go home
       </button>
       {films && (
