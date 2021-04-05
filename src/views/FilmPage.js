@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import * as HomePageApi from '../services/ApiGenerator';
 import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import Cast from './Cast';
-import Review from './Review';
+import { Route, useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import Loader from 'react-loader-spinner';
+const Cast = lazy(() => import('./Cast'));
+const Review = lazy(() => import('./Review'));
 
 export default function FilmPage() {
   const { id } = useParams();
-  // console.log(id);
   const [films, setFilms] = useState(null);
   const { url, path } = useRouteMatch();
   const urlImg = 'https://image.tmdb.org/t/p/w500/';
-
+  let history = useHistory();
   useEffect(() => {
     const fetchFilm = () => {
       HomePageApi.filmDetails(id).then(({ data }) => {
@@ -23,8 +23,15 @@ export default function FilmPage() {
     fetchFilm();
   }, [id]);
 
+  const handleButtonClick = () => {
+    history.push('/');
+  };
+
   return (
     <>
+      <button type="button" onClick={handleButtonClick}>
+        Go home
+      </button>
       {films && (
         <>
           <h1>{films.title}</h1>
@@ -55,12 +62,14 @@ export default function FilmPage() {
             </li>
           </ul>
           <hr />
-          <Route path={`${path}/cast`}>
-            <Cast id={id} />
-          </Route>
-          <Route path={`${path}/reviews`}>
-            <Review id={id} />
-          </Route>
+          <Suspense fallback={<Loader />}>
+            <Route path={`${path}/cast`}>
+              <Cast id={id} />
+            </Route>
+            <Route path={`${path}/reviews`}>
+              <Review id={id} />
+            </Route>
+          </Suspense>
         </>
       )}
     </>

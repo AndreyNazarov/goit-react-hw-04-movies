@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react';
 import MoviesView from './MoviesView';
 import * as HomePageApi from '../services/ApiGenerator';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import Loader from '../Loader/Loader';
 
 const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [films, setFilms] = useState([]);
-  const [loader, setLoader] = useState(false);
   const { url } = useRouteMatch();
 
   useEffect(() => {
@@ -16,12 +14,9 @@ const MoviesPage = () => {
     }
 
     const fetchFilm = () => {
-      setLoader(true);
-      HomePageApi.findFilms(searchQuery)
-        .then(({ data }) => {
-          setFilms(prevFilm => [...prevFilm, ...data.results]);
-        })
-        .finally(() => setLoader(false));
+      HomePageApi.findFilms(searchQuery).then(({ data }) => {
+        setFilms(prevFilm => [...prevFilm, ...data.results]);
+      });
     };
 
     fetchFilm();
@@ -42,7 +37,6 @@ const MoviesPage = () => {
             </li>
           ))}
       </ul>
-      {loader && <Loader />}
     </>
   );
 };

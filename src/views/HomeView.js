@@ -1,22 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as HomePageApi from '../services/ApiGenerator';
-import Loader from '../Loader/Loader';
 
 export default function HomeView() {
-  const { url } = useRouteMatch();
-
   const [page, setPage] = useState(null);
-  const [loader, setLoader] = useState(false);
+
   useEffect(() => {
     const fetchFilm = () => {
-      setLoader(true);
       HomePageApi.fetchFilmsTrends()
         .then(res => res.data)
         .then(({ results }) => {
           setPage(results);
-        })
-        .finally(() => setLoader(false));
+        });
     };
     fetchFilm();
   }, []);
@@ -32,7 +27,6 @@ export default function HomeView() {
             </li>
           ))}
       </ul>
-      {loader && <Loader />}
     </>
   );
 }
