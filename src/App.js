@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomeView from './views/HomeView';
-import Navigation from './views/Navigation/Navigation';
+import Navigation from './views/Navigation';
 import MoviesPage from './views/MoviesPage';
 import FilmPage from './views/FilmPage';
 const App = () => {

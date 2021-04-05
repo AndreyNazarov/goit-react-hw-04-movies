@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function FilmPage() {
   const { id } = useParams();
+  // console.log(id);
   const [films, setFilms] = useState(null);
   const { url, path } = useRouteMatch();
   const urlImg = 'https://image.tmdb.org/t/p/w500/';
@@ -20,14 +21,19 @@ export default function FilmPage() {
     };
 
     fetchFilm();
-  }, [films, id]);
+  }, [id]);
 
   return (
     <>
       {films && (
         <>
           <h1>{films.title}</h1>
-          <img src={`${urlImg}${films.poster_path}`} alt={films.title} />
+          <img
+            width="300"
+            height="320"
+            src={`${urlImg}${films.poster_path}`}
+            alt={films.title}
+          />
           <h3>User Score: {films.vote_average * 10 + '%'}</h3>
 
           <h3>Overview:</h3>
@@ -50,10 +56,10 @@ export default function FilmPage() {
           </ul>
           <hr />
           <Route path={`${path}/cast`}>
-            <Cast />
+            <Cast id={id} />
           </Route>
           <Route path={`${path}/reviews`}>
-            <Review />
+            <Review id={id} />
           </Route>
         </>
       )}

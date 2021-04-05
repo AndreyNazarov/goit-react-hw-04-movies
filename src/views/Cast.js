@@ -1,36 +1,38 @@
 import { useState, useEffect } from 'react';
 import * as HomePageApi from '../services/ApiGenerator';
-import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
+import s from '../styles/cast.module.css';
 const Cast = () => {
   const [actors, setActors] = useState(null);
-  const { castId } = useParams();
+  const { id } = useParams();
 
   const urlImg = 'https://image.tmdb.org/t/p/w500/';
   useEffect(() => {
-    console.log(castId);
-    HomePageApi.fetchCast(castId).then(({ data }) => {
-      setActors(data);
-      // console.log(data);
+    HomePageApi.fetchCast(id).then(({ data }) => {
+      const splicedActors = data.cast.slice(0, 8);
+      setActors(splicedActors);
     });
-    // console.log('cast');
-  }, [castId]);
+  }, [id]);
 
   return (
     <div>
-      {console.log(actors)}
-      {actors && actors.map(actor => <p>{console.log(actor)}</p>)}
-      {/* {cast &&
-        cast.map(actor => ( */}
-
-      {/* <img src={`${urlImg}${cast.profile_path}`} alt="" /> */}
-      {/* {cast && <p>Character: {`${cast.cast.name}`}</p>} */}
-
-      {/* ))} */}
-      {/* {cast.map(actor => (
-        <h1>{actor.name}</h1>
-      ))} */}
+      <ul>
+        {actors &&
+          actors.map(actor => (
+            <li key={uuidv4()}>
+              <img
+                width="200"
+                height="220"
+                src={`${urlImg}${actor.profile_path}`}
+                alt="actors"
+                className={s.image}
+              />
+              <p>{actor.name}</p>
+              <p>Character: {actor.character}</p>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
