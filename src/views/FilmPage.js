@@ -23,13 +23,9 @@ export default function FilmPage() {
     fetchFilm();
   }, [id]);
 
-  const handleButtonClick = () => {
-    history.push('/');
-  };
-
   return (
     <>
-      <button type="button" onClick={handleButtonClick}>
+      <button type="button" onClick={history.push('/')}>
         Go home
       </button>
       {films && (
