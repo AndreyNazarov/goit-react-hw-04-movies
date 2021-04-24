@@ -5,6 +5,8 @@ import Loader from './Loader/Loader';
 import Navigation from './views/Navigation';
 
 const HomeView = lazy(() => import('./views/HomeView'));
+const Users = lazy(() => import('./views/User'));
+const Chart = lazy(() => import('./views/Chart'));
 const MoviesPage = lazy(() => import('./views/MoviesPage'));
 const FilmPage = lazy(() => import('./views/FilmPage'));
 const App = () => {
@@ -21,6 +23,12 @@ const App = () => {
           </Route>
           <Route path="/movies/:id">
             <FilmPage />
+          </Route>
+          <Route path="/charts">
+            <Chart />
+          </Route>
+          <Route path="/users">
+            <Users />
           </Route>
 
           <Redirect to="/" />
